@@ -1,0 +1,52 @@
+@import user.User
+@(userForm: Form[User])
+
+@main("Sign in") {
+
+    @helper.form(action = routes.Application.checkLogin(), 'class -> "form-horizontal", 'role -> "form") {
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/login.css")" />
+
+
+        <div class="row">
+        <div class="col-lg-2">
+            <div class="container">
+
+            </div>
+
+        <div class="col-lg-3">
+
+            <br>
+            <br>
+            <br>
+
+            <div class="container">
+                <div class="card card-container">
+                    <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+                    <p id="profile-name" class="profile-name-card"></p>
+                    <form class="form-signin">
+                        <span id="reauth-email" class="reauth-email"></span>
+                        <input type="email" name="email" value="@userForm.bindFromRequest().field("email").value()" onblur="checkEmail()" id="inputEmail" class="form-control" placeholder="name.surname&#64;bitcamp.ba" required autofocus>
+                        <span id="emailError" class="alert-warning " data-error-for="" ></span>
+
+                        <input type="password" name="password" value="@userForm.bindFromRequest().field("password").value()" id="inputPassword" class="form-control" placeholder="Password must be strong eg. [A-Z, a-z, 0-9]." required>
+                        <div id="remember" class="checkbox">
+                            <label>
+                                <input type="checkbox" value="remember-me"> Remember me
+                            </label>
+                        </div>
+                        <br>
+                        <br>
+                        <button class="btn btn-lg btn-primary btn-block btn-signin" id="login" type="submit" href="@routes.Application.checkLogin()">Sign in</button>
+                    </form><!-- /form -->
+                    <a href="@controllers.users.routes.UserController.forgotPassword()" class="forgot-password">
+                        Forgot the password?
+                    </a>
+                </div><!-- /card-container -->
+            </div><!-- /container -->
+
+       </div>
+        <div class="col-lg-7"></div>
+        </div>
+            </div>
+    }
+}

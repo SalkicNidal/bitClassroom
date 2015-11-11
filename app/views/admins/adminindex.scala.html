@@ -1,0 +1,196 @@
+@import models.user.User
+@(user: User)
+    @adminmain("Admin panel") {
+
+        <div class="content-wrapper">
+            <div class="container">
+                <div class="col-lg-12">
+
+                <div class="table-responsive">
+
+                </div>
+            </div>
+
+                <hr/>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                <div class="row">
+                        <div class="col-md-3 col-sm-3 col-xs-6">
+                            <div class="ImageWrapper ContentWrapperCu chrome-fix">
+                                <img class="img-responsive" src="http://res.cloudinary.com/dsjagtpwx/image/upload/v1446174646/usr_e2k0an.png" alt="users">
+                                <div class="ContentCu">
+                                    <div class="Content">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                        <h3 style="text-align: center">
+                                            Users
+                                        </h3>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <a href="/admin/allusers" class="btn btn-primary btn-lg btn-block">View</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    <div class="col-md-3 col-sm-3 col-xs-6">
+                        <div class="ImageWrapper ContentWrapperCu chrome-fix">
+                            <img class="img-responsive" src="http://res.cloudinary.com/dsjagtpwx/image/upload/v1446174646/cls_dh6qfn.png" alt="classes">
+                            <div class="ContentCu">
+                                <div class="Content">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <h3 style="text-align: center">
+                                                Classes
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <a href="@routes.Application.index()" class="btn btn-primary btn-lg btn-block">View</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-md-3 col-sm-3 col-xs-6">
+                        <div class="ImageWrapper ContentWrapperCu chrome-fix">
+                            <img class="img-responsive" src="http://res.cloudinary.com/dsjagtpwx/image/upload/v1446174646/msg_u7e5hc.png" alt="classes">
+                            <div class="ContentCu">
+                                <div class="Content">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <h3 style="text-align: center">
+                                                Messages
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <a href="@controllers.users.routes.UserController.allMessage()" class="btn btn-primary btn-lg btn-block">View</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-3 col-xs-6">
+                        <div class="ImageWrapper ContentWrapperCu chrome-fix">
+                            <img class="img-responsive" src="http://res.cloudinary.com/dsjagtpwx/image/upload/v1446174646/err_mb6lo0.png" alt="classes">
+                            <div class="ContentCu">
+                                <div class="Content">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <h3 style="text-align: center">
+                                                Error log
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <a href="@controllers.users.routes.AdminController.seeErrors()" class="btn btn-primary btn-lg btn-block">View</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                        </div>
+                    </div>
+                <hr/>
+
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="notice-board">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Active Panel:
+                                    <div class="pull-right" >
+                                        <div class="dropdown">
+                                            <button class="btn btn-success dropdown-toggle " type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                                                <i class="fa fa-cog fa-spin"></i>
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
+                                                    <i class="fa fa-refresh"></i>  Refresh</a></li>
+                                                <li role="presentation"><a role="menuitem" tabindex="-1" href="/logout">
+                                                    <i class="fa fa-sign-out"></i>  Logout</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+
+                                    <ul >
+                                           @for(post <- user.getPosts ) {
+                                               <li>
+                                                   <a href="@controllers.course.routes.CourseController.course(user.getPosts.get(user.getPosts.size()-1).getCourse.getId)">
+                                                       <span class="glyphicon glyphicon-align-left text-success" ></span>
+                                                       <strong style="color : green"></strong>
+                                                       <span class="label label-success" >@user.getPosts.get(user.getPosts.size() - 1)</span>
+                                                   </a>
+                                               </li>
+                                           }
+                                    </ul>
+                                </div>
+                                <div class="panel-footer">
+                                    <a href="@controllers.posts.routes.PostController.addPost()" class="btn btn-default btn-block"> <i class="glyphicon glyphicon-repeat"></i>
+                                        Write Post</a>
+                                </div>
+                            </div>
+                        </div>
+                        <hr/>
+                        <hr/>
+
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <a href="#" class="btn btn-social btn-facebook btn-block" >
+                                  <i class="fa fa-facebook"></i>&nbsp; Facebook</a>
+                                <a href="#" class="btn btn-social btn-google btn-block">
+                                  <i class="fa fa-google-plus"></i>&nbsp; Google</a>
+                                <a href="#" class="btn btn-social btn-twitter btn-block">
+                                  <i class="fa fa-twitter"></i>&nbsp; Twitter </a>
+                                <a href="#" class="btn btn-social btn-linkedin btn-block">
+                                  <i class="fa fa-linkedin"></i>&nbsp; Linkedin </a>
+                              </div>
+                        </div>
+
+                        </div>
+
+
+          <div class="Compose-Message pull-right">
+            <div class="panel panel-success">
+              <div class="panel-heading">
+                Compose New Message
+              </div>
+              <div class="panel-body">
+
+                <label>Enter Recipient Name : </label>
+                <input type="text" class="form-control" />
+                <label>Enter Subject :  </label>
+                <input type="text" class="form-control" />
+                <label>Enter Message : </label>
+                <textarea rows="9" class="form-control"></textarea>
+                <hr />
+                <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-envelope"></span>
+                  Send Message </a>&nbsp;
+              </div>
+              <div class="panel-footer text-muted">
+                <strong>Note : </strong>Please note that we track all messages so don't send any spams.
+              </div>
+            </div>
+
+
+
+            </div>
+        </div>
+
+        </div>
+        </div>
+    }

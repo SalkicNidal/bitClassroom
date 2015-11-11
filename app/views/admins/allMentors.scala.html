@@ -1,0 +1,51 @@
+@import models.user.User
+@import utility.UserConstants
+
+@(userList: List[User])
+@adminmain("Mentors ") {
+
+  <br/>
+  <legend>Mentors</legend>
+
+  <div class="container">
+    <div class="table-responsive">
+      <table id="sort" class="table-condensed table-hover table table-bordered">
+        <thead>
+          <tr class="navbar-inverse">
+            <th class="th-color">First name</th>
+            <th class="th-color">Last name</th>
+            <th class="th-color">Email</th>
+            <th class="th-color">Profile</th>
+            <th class="th-color">Registered</th>
+            <th class="th-color">Role</th>
+            <th class="th-color">Delete</th>
+
+          </tr>
+        </thead>
+        <tbody>
+        @for(users <- userList) {
+          <tr class="information">
+            <td>@users.getFirstName</td>
+            <td>@users.getLastName</td>
+            <td>@users.getEmail</td>
+            <td><a href="@controllers.users.routes.UserController.publicProfile(users.getId)"><i class="glyphicon glyphicon-user"/></a></td>
+            @if(users.getStatus == UserConstants.FULLY_ACTIVE){
+              <td><a href="@controllers.users.routes.AdminController.editUserRole(users.getId)"><i class="glyphicon glyphicon-edit">  Edit</i></a></td>
+            }else{
+              <td><span class="badge">Waiting</span> </td>
+            }
+            <td>Mentor</td>
+            <td>
+              <a data-role="delete" data-delete-parent="tr" href="@controllers.users.routes.AdminController.deleteUser(users.getId)" role="button">
+                        <i class="glyphicon glyphicon-trash"></i></a>
+            </td>
+          </tr>
+        }
+        </tbody>
+      </table>
+
+    </div>
+
+  </div>
+
+}

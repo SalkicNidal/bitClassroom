@@ -1,0 +1,35 @@
+@import models.course.Course
+@(courses: List[Course])
+@adminmain("Deleted courses") {
+
+  <br/>
+  <legend>Deleted course on bitClassroom</legend>
+
+  <div class="container">
+    <div class="table-responsive">
+
+      <table id="sort" class="table-condensed table-hover table">
+        <thead>
+          <tr class="navbar-inverse">
+            <th class="th-color">Course name</th>
+            <th class="th-color">Description</th>
+            <th class="th-color">Teacher</th>
+            <th class="th-color">Deleted by</th>
+          </tr>
+        </thead>
+        <tbody>
+        @for(course <- courses) {
+          <tr class="information">
+            <td>@course.getName</td>
+            <td>@course.getDescription</td>
+            <td>@course.getTeacher</td>
+            <td>@course.getUpdatedBy</td>
+          </tr>
+        }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+}

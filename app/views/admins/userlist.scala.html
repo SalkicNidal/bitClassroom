@@ -1,0 +1,90 @@
+@import models.user.User
+@import utility.UserConstants
+
+@(userList: List[User])
+@adminmain("Users ") {
+
+    <br/>
+    <legend>Users</legend>
+
+    <div class="container">
+        <div class="table-responsive">
+            <table id="sort" class="table-condensed table-hover table table-bordered">
+                <thead>
+                    <tr class="navbar-inverse">
+                        <th class="th-color">First name</th>
+                        <th class="th-color">Last name</th>
+                        <th class="th-color">Email</th>
+                        <th class="th-color">Profile</th>
+                        <th class="th-color">Registered</th>
+                        <th class="th-color">Role</th>
+                        <th class="th-color">Delete</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                @for(users <- userList) {
+                    <tr class="information">
+                        <td>@users.getFirstName</td>
+                        <td>@users.getLastName</td>
+                        <td>@users.getEmail</td>
+                        <td><a href="@controllers.users.routes.UserController.publicProfile(users.getId)"><i class="glyphicon glyphicon-user"/></a></td>
+                        @if(users.getStatus == UserConstants.FULLY_ACTIVE){
+                        <td><a href="@controllers.users.routes.AdminController.editUserRole(users.getId)"><i class="glyphicon glyphicon-edit">  Edit</i></a></td>
+                        }else{
+                            <td><span class="badge">Waiting</span> </td>
+                        }
+                        @if(users.getRoles.size() > 0 && users.getRoles != null) {
+                            @if(users.getRoles.size() == 1) {
+
+                                @for(role <- users.getRoles) {
+                                    @if(role.getId.equals(UserConstants.ADMIN)) {
+                                        <td>Admin</td>
+                                        <td></td>
+                                    }
+                                    @if(role.getId.equals(UserConstants.TEACHER)) {
+                                        <td>Teacher</td>
+                                        <td>
+                                            <a data-role="delete" data-delete-parent="tr" href="@controllers.users.routes.AdminController.deleteUser(users.getId)" role="button">
+                                                <i class="glyphicon glyphicon-trash"></i></a>
+                                        </td>
+
+                                    }
+                                    @if(role.getId.equals(UserConstants.MENTOR)) {
+                                        <td>Mentor</td>
+                                        <td>
+                                            <a data-role="delete" data-delete-parent="tr" href="@controllers.users.routes.AdminController.deleteUser(users.getId)" role="button">
+                                                <i class="glyphicon glyphicon-trash"></i></a>
+                                        </td>
+                                    }
+                                    @if(role.getId.equals(UserConstants.STUDENT)) {
+                                        <td>Student</td>
+                                        <td>
+                                            <a data-role="delete" data-delete-parent="tr" href="@controllers.users.routes.AdminController.deleteUser(users.getId)" role="button">
+                                                <i class="glyphicon glyphicon-trash"></i></a>
+                                        </td>
+                                    }
+
+                                }
+
+                            } else{
+                               @if(((users.getRoles.get(0).getId.equals(UserConstants.ADMIN)) || (users.getRoles.get(0).getId.equals(UserConstants.TEACHER))) && ((users.getRoles.get(1).getId.equals(UserConstants.ADMIN)) || (users.getRoles.get(1).getId.equals(UserConstants.TEACHER)))){
+                                   <td>Admin/Teacher</td>
+                                   <td></td>
+
+                               }
+                            }
+
+
+                        }
+
+                    </tr>
+                }
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+}

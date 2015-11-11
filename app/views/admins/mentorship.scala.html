@@ -1,0 +1,66 @@
+@import models.user.User
+@import utility.UserConstants
+@(userList: List[User])(active: Int)
+@adminmain("Assign mentor to students") {
+
+    @helper.form(action = controllers.users.routes.AdminController.saveMentorship(), 'class -> "form-horizontal", 'role -> "form", 'enctype -> "multipart/form-data") {
+        <br>
+        <div class="panel panel-default">
+            <div class="panel-body">
+        <legend>Mentorship process</legend>
+        <div class="form-group">
+            <label for="select" class="col-lg-2 control-label">Mentors</label>
+            <div class="col-lg-4">
+                <select class="form-control" id="select" name="mentor">
+                @for(user <- userList) {
+                    @if(user.getRoles != null && user.getRoles.size() > 0) {
+                        @for(role <- user.getRoles) {
+                            @if(role.getId.equals(UserConstants.MENTOR)) {
+                                <option value="@user.getId">@user.getFirstName @user.getLastName</option>
+                            }
+                        }
+                    }
+                }
+                </select>
+            </div>
+
+            <label for="select" class="col-lg-2 control-label">Students</label>
+            <div class="col-lg-4">
+                <select class="form-control" id="select" name="student">
+                @for(user <- userList) {
+                    @if(user.getRoles != null && user.getRoles.size() > 0) {
+                        @for(role <- user.getRoles) {
+                            @if(role.getId.equals(UserConstants.STUDENT) && user.getStudentStatus.equals(UserConstants.DONT_HAVE_MENTOR)) {
+                                <option value="@user.getId">@user.getFirstName @user.getLastName</option>
+                            }
+                        }
+                    }
+                }
+                </select>
+            </div>
+
+            @if(active > 0) {
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <br>
+                <button type="submit" class="btn btn-primary btn-block" href="@controllers.users.routes.AdminController.saveMentorship()">
+                    Assign</button>
+                    </div>
+                </div>
+            } else {
+                <br>
+
+                <div class="alert alert-dismissible alert-info top50">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>All students have mentors.</strong>
+                    <div>
+                }
+        </div>
+
+        </div>
+        </div>
+
+}
+
+}
+

@@ -1,0 +1,36 @@
+@import models.user.Mentorship
+@(mentorship: List[Mentorship])
+@adminmain("Mentorship program") {
+
+
+  <br/>
+  <legend>Active mentorship</legend>
+
+  <div class="container">
+    <div class="table-responsive">
+
+      <table id="sort" class="table-condensed table-hover table table-bordered">
+        <thead>
+          <tr class="navbar-inverse">
+            <th class="th-color">Mentor</th>
+            <th class="th-color">Student</th>
+            <th class="th-color">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+        @for(men <- mentorship) {
+          <tr class="information">
+            <td>@men.getMentor.getFirstName @men.getMentor.getLastName</td>
+            <td>@men.getStudent.getFirstName @men.getStudent.getLastName</td>
+            <td>
+              <a data-role="delete" data-delete-parent="tr" href="@controllers.users.routes.AdminController.deleteMentorship(men.getId)" role="button">
+                <i class="glyphicon glyphicon-trash"></i></a>
+            </td>
+          </tr>
+        }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+}
